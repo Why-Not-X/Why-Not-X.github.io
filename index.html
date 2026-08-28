@@ -1,43 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Web Page</title>
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Xander Callahan</title>
+<meta name="description" content="Xander Callahan — an interactive skill tree grounded in real experience.">
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <p>Hello World</p>
-    <header>
-        <h1>Welcome to My Web Page</h1>     
-        <nav>
-            <ul>
-                <li><a href="#home" class-"nav-item">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
 
+<nav id="nav">
+  <a class="nav-mark" href="#hero">XC</a>
+  <div class="nav-links">
+    <a href="#tree-section">Skill Tree</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
+    <a class="nav-cta" href="assets/resume.pdf" target="_blank" rel="noopener">Resume</a>
+  </div>
+</nav>
 
-        <section id="home">
-            <h2>Home</h2>
-            <p>This is the home section of the web page.</p>
-        </section>
-        <section id="about">
-            <h2>About</h2>
-            <p>This section contains information about the web page.</p>
-        </section>
-        <section id="contact">
-            <h2>Contact</h2>
-            <p>This section provides contact information.</p>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2024 My Web Page</p>
-    </footer>
+<section id="hero">
+  <div class="hero-eyebrow">Boulder, CO</div>
+  <h1 class="hero-name">Xander Callahan</h1>
+  <div class="hero-title">Developer · Designer · Builder</div>
+  <p class="hero-sub">
+    Business Analytics + Computer Science at CU Boulder. Every node in the tree below
+    is a real trait, and every trait is backed by something from an actual job, team,
+    or transcript — click one to see the receipts.
+  </p>
+  <div class="hero-links">
+    <a class="hero-btn primary" href="#tree-section">Explore the skill tree</a>
+    <a class="hero-btn secondary" href="assets/resume.pdf" target="_blank" rel="noopener">View résumé</a>
+  </div>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<section id="tree-section">
+  <div class="sec-head">
+    <div class="sec-eyebrow">Interactive</div>
+    <h2 class="sec-title">The skill tree</h2>
+    <p class="sec-desc">Lit nodes are unlocked traits. Click any one of them to open a breakdown of how it's actually evidenced — not just claimed.</p>
+  </div>
+
+  <div id="tree-app">
+    <div id="canvas-wrap"><canvas id="c"></canvas></div>
+    <div id="panel">
+      <div class="p-header">
+        <h1>Skill Tree</h1>
+        <div class="p-name" id="p-name">—</div>
+        <div class="p-title" id="p-title">—</div>
+        <div class="p-bar-wrap"><div class="p-bar" id="p-bar" style="width:0%"></div></div>
+        <div class="pts"><span>Unlocked</span><span><span id="pts-u">0</span> / <span id="pts-t">0</span></span></div>
+      </div>
+      <div class="stats"><div class="sec-lbl">Progress by branch</div><div id="cat-stats"></div></div>
+      <div class="hint" id="foot">Updated —<br>Click any lit node to open its evidence.</div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="sec-head">
+    <div class="sec-eyebrow">Background</div>
+    <h2 class="sec-title">Experience</h2>
+    <p class="sec-desc">The source material behind the tree above.</p>
+  </div>
+  <div class="timeline" id="timeline"></div>
+</section>
+
+<section id="contact">
+  <div class="sec-head" style="padding-top:0">
+    <div class="sec-eyebrow">Get in touch</div>
+    <h2 class="sec-title">Say hello</h2>
+  </div>
+  <div class="contact-links">
+    <a href="mailto:xander.callahan@colorado.edu">Email</a>
+    <a href="https://www.linkedin.com/in/alexander-y-callahan" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://github.com/Why-Not-X" target="_blank" rel="noopener">GitHub</a>
+    <a href="assets/resume.pdf" target="_blank" rel="noopener">Résumé</a>
+  </div>
+</section>
+
+<footer>&copy; 2026 Xander Callahan</footer>
+
+<div id="modal-backdrop">
+  <div id="modal" role="dialog" aria-modal="true"></div>
+</div>
+
+<script src="js/tree.js"></script>
+<script src="js/render.js"></script>
+<script src="js/evidence.js"></script>
+<script src="js/main.js"></script>
 </body>
-
-
 </html>

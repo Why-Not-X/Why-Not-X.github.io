@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skill Tree — Editor</title>
+<style>
+:root { --bg:#0b0d12; --bg2:#0f111a; --bg3:#13161f; --border:#1c1f2e; --text:#c8cad8; --muted:#5a5e78; --acc:#3daa7f; }
+* { box-sizing:border-box; margin:0; padding:0; }
+html,body { height:100%; background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui,sans-serif; overflow:hidden; }
+#app { display:flex; height:100vh; }
+#canvas-wrap { flex:1; position:relative; overflow:hidden; }
+canvas { display:block; position:absolute; top:0; left:0; }
+
+/* editor badge */
+.ed-badge { position:absolute; top:12px; left:12px; background:#1a1d2a; border:1px solid #2a2d42; border-radius:6px; padding:5px 10px; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:#5a5e78; pointer-events:none; }
+
+#panel { width:280px; background:var(--bg2); border-left:1px solid var(--border); display:flex; flex-direction:column; flex-shrink:0; overflow-y:auto; }
+.p-header { padding:14px 16px; border-bottom:1px solid var(--border); background:var(--bg); }
+.p-header h1 { font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); font-weight:500; }
+.p-sub { font-size:11px; color:#3daa7f; margin-top:3px; }
+.pts { font-size:11px; color:var(--muted); margin-top:8px; display:flex; justify-content:space-between; }
+.pts span { color:var(--text); }
+.p-bar-wrap { height:2px; background:var(--border); margin-top:6px; border-radius:1px; overflow:hidden; }
+.p-bar { height:100%; border-radius:1px; background:var(--acc); transition:width .3s; }
+
+/* meta edit */
+.meta-section { padding:12px 16px; border-bottom:1px solid var(--border); display:flex; flex-direction:column; gap:7px; }
+.sec-lbl { font-size:9px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin-bottom:2px; font-weight:600; }
+.meta-section input { background:#0d0f17; border:1px solid var(--border); border-radius:4px; padding:6px 9px; color:var(--text); font-size:12px; font-family:inherit; width:100%; outline:none; }
+.meta-section input:focus { border-color:#3a3e55; }
+
+/* detail */
+.detail { padding:14px 16px; border-bottom:1px solid var(--border); min-height:150px; flex-shrink:0; }
+.d-name { font-size:14px; font-weight:600; color:#e4e6f0; margin-bottom:4px; }
+.d-badge { font-size:9px; letter-spacing:.12em; text-transform:uppercase; padding:2px 8px; border-radius:3px; display:inline-block; margin-bottom:8px; }
+.d-desc { font-size:12px; color:#8b8fa8; line-height:1.65; }
+.d-req { font-size:11px; color:var(--muted); margin-top:6px; }
+.d-shadow { margin-top:10px; padding:8px 10px; border-left:2px solid #5a2020; background:#110909; border-radius:0 4px 4px 0; }
+.d-shadow-lbl { font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:#6b3030; margin-bottom:2px; }
+.d-shadow-txt { font-size:11px; color:#7a4444; line-height:1.5; }
+.d-empty { font-size:12px; color:var(--muted); }
+.d-evidence-note { font-size:10.5px; color:#4a7a63; margin-top:8px; line-height:1.5; }
+
+/* toggle btn */
+.toggle-btn { margin:10px 16px; padding:9px 14px; border-radius:5px; border:1px solid var(--border); background:transparent; color:var(--muted); font-size:11px; letter-spacing:.06em; cursor:pointer; width:calc(100% - 32px); transition:all .15s; display:none; }
+.toggle-btn.visible { display:block; }
+.toggle-btn:hover { background:var(--bg3); }
+.toggle-btn.can { border-color:var(--c); color:var(--c); }
+.toggle-btn.on { border-color:#3a3e55; color:#5a5e78; }
+
+/* stats */
+.stats { padding:12px 16px; border-bottom:1px solid var(--border); }
+.cat-row { display:flex; align-items:center; gap:7px; margin-bottom:6px; }
+.cat-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+.cat-name { font-size:11px; color:var(--muted); flex:1; }
+.cat-bw { width:50px; height:3px; background:var(--border); border-radius:2px; overflow:hidden; }
+.cat-bf { height:100%; border-radius:2px; transition:width .3s; }
+.cat-ct { font-size:10px; min-width:26px; text-align:right; }
+
+/* export */
+.export-section { padding:12px 16px; display:flex; flex-direction:column; gap:8px; }
+.exp-btn { padding:9px 14px; border-radius:5px; border:1px solid; font-size:11px; letter-spacing:.06em; cursor:pointer; text-align:center; transition:all .15s; }
+.exp-primary { border-color:var(--acc); color:var(--acc); background:transparent; }
+.exp-primary:hover { background:#0d1f18; }
+.exp-copy { border-color:#2a2d42; color:var(--muted); background:transparent; }
+.exp-copy:hover { background:var(--bg3); }
+.exp-note { font-size:10px; color:var(--muted); line-height:1.5; }
+
+.footer { padding:10px 16px; border-top:1px solid var(--border); font-size:10px; color:var(--muted); margin-top:auto; }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="canvas-wrap">
+    <canvas id="c"></canvas>
+    <div class="ed-badge">Editor mode</div>
+  </div>
+  <div id="panel">
+    <div class="p-header">
+      <h1>Skill Tree — Editor</h1>
+      <div class="p-sub">Click nodes to toggle · Only you see this page</div>
+      <div class="pts"><span>Unlocked</span><span><span id="pts-u">0</span> / <span id="pts-t">0</span></span></div>
+      <div class="p-bar-wrap"><div class="p-bar" id="p-bar" style="width:0%"></div></div>
+    </div>
+
+    <div class="meta-section">
+      <div class="sec-lbl">Your details</div>
+      <input id="meta-name"  placeholder="Your name"  />
+      <input id="meta-title" placeholder="Title / tagline" />
+    </div>
+
+    <div class="detail" id="detail"><p class="d-empty">Click any node to inspect or toggle it.</p></div>
+    <button class="toggle-btn" id="toggle-btn" onclick="toggleSelected()"></button>
+
+    <div class="stats"><div class="sec-lbl">Progress by branch</div><div id="cat-stats"></div></div>
+
+    <div class="export-section">
+      <div class="sec-lbl">Export</div>
+      <button class="exp-btn exp-primary" onclick="downloadState()">⬇ Download state.json</button>
+      <button class="exp-btn exp-copy"    onclick="copyState()">Copy JSON to clipboard</button>
+      <p class="exp-note">Replace <code>state.json</code> at the repo root with the downloaded file, then push. Live site picks it up automatically.<br><br>
+      Unlocking a node with no matching entry in <code>js/evidence.js</code> just shows "not yet backed by a resume line" on the public site — add an entry there when you have real evidence for it.</p>
+    </div>
+
+    <div class="footer">Editor · Changes stay local until you export &amp; push</div>
+  </div>
+</div>
+
+<script src="js/tree.js"></script>
+<script src="js/render.js"></script>
+<script>
+let unlocked = new Set(['core']);
+let selected  = null;
+let hovered   = null;
+
+const canvas = document.getElementById('c');
+const ctx    = canvas.getContext('2d');
+let W, H;
+
+function resize() {
+  const wrap = document.getElementById('canvas-wrap');
+  W = wrap.clientWidth; H = wrap.clientHeight;
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width  = W * dpr; canvas.height = H * dpr;
+  canvas.style.width = W+'px'; canvas.style.height = H+'px';
+  ctx.setTransform(1,0,0,1,0,0); ctx.scale(dpr,dpr);
+  redraw();
+}
+window.addEventListener('resize', resize);
+function redraw() { drawTree(canvas, ctx, W, H, unlocked, selected, hovered, true); }
+
+function canUnlock(n) { return !unlocked.has(n.id) && n.requires.every(r=>unlocked.has(r)); }
+
+function nodeAt(mx,my) {
+  const CX=W/2, CY=H/2;
+  for (let i=NODES.length-1;i>=0;i--) {
+    const n=NODES[i];
+    const p=getPos(n,CX,CY);
+    const r=(NODE_R[n.tier]??12)+8;
+    if ((mx-p.x)**2+(my-p.y)**2<=r*r) return n;
+  }
+  return null;
+}
+function mp(e){const r=canvas.getBoundingClientRect();return{mx:e.clientX-r.left,my:e.clientY-r.top};}
+
+canvas.addEventListener('mousemove',e=>{
+  const {mx,my}=mp(e);
+  const n=nodeAt(mx,my);
+  const nid=n?n.id:null;
+  if (nid!==hovered){
+    hovered=nid; canvas.style.cursor=n?'pointer':'default';
+    if(n&&n.id!==selected) showDetail(n);
+    else if(!n&&!selected) showDetail(null);
+    redraw();
+  }
+});
+canvas.addEventListener('mouseleave',()=>{hovered=null;if(!selected)showDetail(null);redraw();});
+canvas.addEventListener('click',e=>{
+  const {mx,my}=mp(e);
+  const n=nodeAt(mx,my);
+  if(n){ selected=n.id===selected?null:n.id; showDetail(selected?n:null); }
+  else { selected=null; showDetail(null); }
+  redraw();
+});
+
+function toggleSelected() {
+  if (!selected) return;
+  const node = NODES.find(n=>n.id===selected);
+  if (!node || node.id==='core') return;
+  if (unlocked.has(node.id)) {
+    const deps = NODES.filter(n=>n.requires.includes(node.id)&&unlocked.has(n.id));
+    if (deps.length) { alert('Remove dependant skills first:\n'+deps.map(d=>d.label).join(', ')); return; }
+    unlocked.delete(node.id);
+  } else if (canUnlock(node)) {
+    unlocked.add(node.id);
+  }
+  updateStats(); showDetail(node); redraw();
+}
+
+function showDetail(node) {
+  const el  = document.getElementById('detail');
+  const btn = document.getElementById('toggle-btn');
+  if (!node) {
+    el.innerHTML='<p class="d-empty">Click any node to inspect or toggle it.</p>';
+    btn.classList.remove('visible'); return;
+  }
+  const cat=CATS[node.cat];
+  const on=unlocked.has(node.id), can=canUnlock(node);
+  const reqs=node.requires.map(id=>NODES.find(n=>n.id===id)?.label).filter(Boolean);
+  el.innerHTML=`
+    <div class="d-name">${node.label}</div>
+    <span class="d-badge" style="background:${cat.color}1a;color:${cat.color}">${cat.label}</span>
+    <div class="d-desc">${node.desc}</div>
+    ${reqs.length?`<div class="d-req">Requires: ${reqs.join(', ')}</div>`:''}
+    <div class="d-shadow">
+      <div class="d-shadow-lbl">Shadow trait</div>
+      <div class="d-shadow-txt">${node.shadow}</div>
+    </div>
+    <div class="d-evidence-note">Public site pulls a resume-evidence writeup for this node from js/evidence.js if one exists there.</div>`;
+  btn.classList.add('visible');
+  btn.style.setProperty('--c', cat.color);
+  if (node.id==='core') {
+    btn.textContent='Origin — always active'; btn.className='toggle-btn visible';
+  } else if (on) {
+    btn.textContent='✓ Unlocked — click to remove'; btn.className='toggle-btn visible on';
+  } else if (can) {
+    btn.textContent='+ Unlock this skill'; btn.className='toggle-btn visible can';
+  } else {
+    btn.textContent='Locked — unlock prerequisites first'; btn.className='toggle-btn visible';
+  }
+}
+
+function updateStats() {
+  const u=unlocked.size, t=NODES.length;
+  document.getElementById('pts-u').textContent=u;
+  document.getElementById('pts-t').textContent=t;
+  document.getElementById('p-bar').style.width=(u/t*100).toFixed(1)+'%';
+  const groups=[
+    ['Perception','perception'],['Contemplation','contemplation'],
+    ['Systems','systems'],['Creation','creation'],['Expression','expression'],
+    ['Drive','drive'],['Craft','hard_craft'],['Technology','hard_tech'],['Fusion','fusion'],
+  ];
+  document.getElementById('cat-stats').innerHTML=groups.map(([lbl,cat])=>{
+    const ids=NODES.filter(n=>n.cat===cat).map(n=>n.id);
+    const c=ids.filter(id=>unlocked.has(id)).length,tot=ids.length;
+    const col=CATS[cat].color;
+    return `<div class="cat-row">
+      <div class="cat-dot" style="background:${col}"></div>
+      <div class="cat-name">${lbl}</div>
+      <div class="cat-bw"><div class="cat-bf" style="width:${tot?Math.round(c/tot*100):0}%;background:${col}"></div></div>
+      <div class="cat-ct" style="color:${c?col:'#2a2d3e'}">${c}/${tot}</div>
+    </div>`;
+  }).join('');
+}
+
+function buildState() {
+  return {
+    unlocked: [...unlocked],
+    name:  document.getElementById('meta-name').value  || 'Name',
+    title: document.getElementById('meta-title').value || '',
+    updated: new Date().toISOString().slice(0,10),
+  };
+}
+
+function downloadState() {
+  const json = JSON.stringify(buildState(), null, 2);
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([json],{type:'application/json'}));
+  a.download = 'state.json'; a.click();
+}
+
+function copyState() {
+  navigator.clipboard.writeText(JSON.stringify(buildState(), null, 2))
+    .then(()=>alert('Copied! Paste into your state.json file.'))
+    .catch(()=>alert('Copy failed — use Download instead.'));
+}
+
+// Load existing state.json if present
+async function loadState() {
+  try {
+    const r = await fetch('state.json?t='+Date.now());
+    const s = await r.json();
+    unlocked = new Set(s.unlocked||['core']);
+    if (s.name)  document.getElementById('meta-name').value  = s.name;
+    if (s.title) document.getElementById('meta-title').value = s.title;
+  } catch(e) { /* fresh start */ }
+  updateStats(); resize();
+}
+
+loadState();
+</script>
+</body>
+</html>
