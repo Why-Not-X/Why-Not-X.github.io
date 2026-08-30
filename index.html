@@ -20,19 +20,51 @@
 </nav>
 
 <section id="hero">
-  <div class="hero-eyebrow">Boulder, CO</div>
-  <h1 class="hero-name">Xander Callahan</h1>
-  <div class="hero-title">Developer · Designer · Builder</div>
-  <p class="hero-sub">
-    Business Analytics + Computer Science at CU Boulder. Every node in the tree below
-    is a real trait, and every trait is backed by something from an actual job, team,
-    or transcript — click one to see the receipts.
-  </p>
-  <div class="hero-links">
-    <a class="hero-btn primary" href="#tree-section">Explore the skill tree</a>
-    <a class="hero-btn secondary" href="assets/resume.pdf" target="_blank" rel="noopener">View résumé</a>
+  <svg class="hero-art" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <filter id="heroBlur" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="70" />
+      </filter>
+    </defs>
+    <g filter="url(#heroBlur)">
+      <circle cx="180" cy="120" r="260" fill="#06D6A0" opacity="0.55" />
+      <circle cx="1440" cy="180" r="300" fill="#FFC43D" opacity="0.5" />
+      <circle cx="120" cy="880" r="280" fill="#EF476F" opacity="0.45" />
+      <circle cx="1500" cy="860" r="260" fill="#1B9AAA" opacity="0.5" />
+      <circle cx="800" cy="60" r="180" fill="#1B9AAA" opacity="0.35" />
+      <circle cx="800" cy="960" r="220" fill="#06D6A0" opacity="0.3" />
+    </g>
+  </svg>
+  <svg class="hero-art hero-art-vivid" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <filter id="heroBlurVivid" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="34" />
+      </filter>
+    </defs>
+    <g filter="url(#heroBlurVivid)">
+      <circle cx="180" cy="120" r="260" fill="#06D6A0" opacity="0.95" />
+      <circle cx="1440" cy="180" r="300" fill="#FFC43D" opacity="0.9" />
+      <circle cx="120" cy="880" r="280" fill="#EF476F" opacity="0.85" />
+      <circle cx="1500" cy="860" r="260" fill="#1B9AAA" opacity="0.9" />
+      <circle cx="800" cy="60" r="180" fill="#1B9AAA" opacity="0.75" />
+      <circle cx="800" cy="960" r="220" fill="#06D6A0" opacity="0.7" />
+    </g>
+  </svg>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Boulder, CO</div>
+    <h1 class="hero-name">Xander Callahan</h1>
+    <div class="hero-title">Developer · Designer · Builder</div>
+    <p class="hero-sub">
+      Business Analytics + Computer Science at CU Boulder. Every node in the tree below
+      is a real trait, and every trait is backed by something from an actual job, team,
+      or transcript — click one to see the receipts.
+    </p>
+    <div class="hero-links">
+      <a class="hero-btn primary" href="#tree-section">Explore the skill tree</a>
+      <a class="hero-btn secondary" href="assets/resume.pdf" target="_blank" rel="noopener">View résumé</a>
+    </div>
+    <div class="hero-scroll">Scroll</div>
   </div>
-  <div class="hero-scroll">Scroll</div>
 </section>
 
 <section id="tree-section">

@@ -1,8 +1,37 @@
 // ── Shared canvas renderer ────────────────────────────────────────────────────
 // Called by both index.html (viewer) and editor.html
 // Expects: canvas, NODES, CATS, ARMS, TIER_R, NODE_R, getPos, labelLines
+//
+// Category colors (CATS) carry meaning per branch and stay fixed across themes.
+// Everything else — rings, spines, locked-node fills, off-labels — is theme-aware.
 
-function drawTree(canvas, ctx, W, H, unlocked, selected, hovered, editorMode) {
+const CANVAS_THEME = {
+  dark: {
+    tierRing: '#ffffff05',
+    armOn: '#ffffff0c',
+    armOff: '#ffffff04',
+    armLabelOff: '#2a2d3e',
+    edgeOff: '#1d2035',
+    nodeFillUnlockable: '#101320',
+    nodeFillLocked: '#0b0d13',
+    nodeBorderLocked: '#1e2130',
+    labelOff: '#252838',
+  },
+  light: {
+    tierRing: '#00000008',
+    armOn: '#00000014',
+    armOff: '#00000007',
+    armLabelOff: '#c9cdb6',
+    edgeOff: '#eceee2',
+    nodeFillUnlockable: '#f3f5e8',
+    nodeFillLocked: '#ffffff',
+    nodeBorderLocked: '#e6e9d8',
+    labelOff: '#c3c7b0',
+  },
+};
+
+function drawTree(canvas, ctx, W, H, unlocked, selected, hovered, editorMode, theme) {
+  const T = CANVAS_THEME[theme] || CANVAS_THEME.dark;
   const CX = W / 2, CY = H / 2;
   ctx.clearRect(0, 0, W, H);
 
@@ -10,7 +39,7 @@ function drawTree(canvas, ctx, W, H, unlocked, selected, hovered, editorMode) {
   for (let t = 1; t <= 6; t++) {
     ctx.beginPath();
     ctx.arc(CX, CY, TIER_R[t], 0, Math.PI * 2);
-    ctx.strokeStyle = '#ffffff05';
+    ctx.strokeStyle = T.tierRing;
     ctx.lineWidth = 1;
     ctx.stroke();
   }
@@ -25,7 +54,7 @@ function drawTree(canvas, ctx, W, H, unlocked, selected, hovered, editorMode) {
     ctx.beginPath();
     ctx.moveTo(CX + Math.cos(angle) * 30, CY + Math.sin(angle) * 30);
     ctx.lineTo(CX + Math.cos(angle) * endR, CY + Math.sin(angle) * endR);
-    ctx.strokeStyle = anyOn ? '#ffffff0c' : '#ffffff04';
+    ctx.strokeStyle = anyOn ? T.armOn : T.armOff;
     ctx.lineWidth = 1;
     ctx.setLineDash([2, 8]);
     ctx.stroke();
@@ -43,7 +72,7 @@ function drawTree(canvas, ctx, W, H, unlocked, selected, hovered, editorMode) {
     const ly = CY + Math.sin(angle) * endR;
     ctx.font = '500 9px "Segoe UI", system-ui, sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillStyle = unlocked.has(root.id) ? cat.color + 'aa' : '#2a2d3e';
+    ctx.fillStyle = unlocked.has(root.id) ? cat.color + 'aa' : T.armLabelOff;
     ctx.fillText(cat.label.toUpperCase(), lx, ly);
   });
 
@@ -75,7 +104,7 @@ function drawTree(canvas, ctx, W, H, unlocked, selected, hovered, editorMode) {
         ctx.lineWidth   = 1;
         ctx.setLineDash([3, 5]);
       } else {
-        ctx.strokeStyle = '#1d2035';
+        ctx.strokeStyle = T.edgeOff;
         ctx.lineWidth   = 1;
         ctx.setLineDash([]);
       }
@@ -131,9 +160,9 @@ function drawTree(canvas, ctx, W, H, unlocked, selected, hovered, editorMode) {
     if (on) {
       ctx.fillStyle = cat.color + '20';
     } else if (canUn) {
-      ctx.fillStyle = '#101320';
+      ctx.fillStyle = T.nodeFillUnlockable;
     } else {
-      ctx.fillStyle = '#0b0d13';
+      ctx.fillStyle = T.nodeFillLocked;
     }
     ctx.fill();
 
@@ -142,7 +171,7 @@ function drawTree(canvas, ctx, W, H, unlocked, selected, hovered, editorMode) {
     ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
     ctx.strokeStyle = on   ? cat.color + (sel ? 'ff' : 'cc')
                     : canUn ? cat.color + '55'
-                    : '#1e2130';
+                    : T.nodeBorderLocked;
     ctx.lineWidth = on ? (sel ? 2.5 : 1.8) : 1;
     ctx.stroke();
 
@@ -188,7 +217,7 @@ function drawTree(canvas, ctx, W, H, unlocked, selected, hovered, editorMode) {
       ctx.textAlign = 'center';
       ctx.fillStyle = on   ? cat.color
                     : canUn ? cat.color + '66'
-                    : '#252838';
+                    : T.labelOff;
       const maxW = r * 3.4;
       const lines = labelLines(node.label, ctx, maxW);
       const lh    = fs + 2;

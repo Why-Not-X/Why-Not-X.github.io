@@ -18,7 +18,7 @@ function resize() {
 }
 window.addEventListener('resize', resize);
 
-function redraw() { drawTree(canvas, ctx, W, H, unlocked, openNodeId, hovered, false); }
+function redraw() { drawTree(canvas, ctx, W, H, unlocked, openNodeId, hovered, false, 'light'); }
 
 function nodeAt(mx, my) {
   const CX = W / 2, CY = H / 2;
@@ -186,3 +186,11 @@ document.getElementById('timeline').innerHTML = TIMELINE.map(t => `
     </div>
   </div>
 `).join('');
+
+// ── Hero background art: spotlight follows the cursor ────────────────────
+const heroEl = document.getElementById('hero');
+heroEl.addEventListener('mousemove', e => {
+  const r = heroEl.getBoundingClientRect();
+  heroEl.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+  heroEl.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+});

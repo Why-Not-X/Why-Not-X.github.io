@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Skill Tree — Editor</title>
 <style>
-:root { --bg:#0b0d12; --bg2:#0f111a; --bg3:#13161f; --border:#1c1f2e; --text:#c8cad8; --muted:#5a5e78; --acc:#3daa7f; }
+:root { --bg:#F8FFE5; --bg2:#FFFFFF; --bg3:#F1F4E2; --border:#E3E8C9; --text:#3c4433; --muted:#6b7460; --acc:#06D6A0; --acc-text:#067a58; }
 * { box-sizing:border-box; margin:0; padding:0; }
 html,body { height:100%; background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui,sans-serif; overflow:hidden; }
 #app { display:flex; height:100vh; }
@@ -13,12 +13,12 @@ html,body { height:100%; background:var(--bg); color:var(--text); font-family:'S
 canvas { display:block; position:absolute; top:0; left:0; }
 
 /* editor badge */
-.ed-badge { position:absolute; top:12px; left:12px; background:#1a1d2a; border:1px solid #2a2d42; border-radius:6px; padding:5px 10px; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:#5a5e78; pointer-events:none; }
+.ed-badge { position:absolute; top:12px; left:12px; background:#FFFFFF; border:1px solid var(--border); border-radius:6px; padding:5px 10px; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); pointer-events:none; }
 
 #panel { width:280px; background:var(--bg2); border-left:1px solid var(--border); display:flex; flex-direction:column; flex-shrink:0; overflow-y:auto; }
 .p-header { padding:14px 16px; border-bottom:1px solid var(--border); background:var(--bg); }
 .p-header h1 { font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); font-weight:500; }
-.p-sub { font-size:11px; color:#3daa7f; margin-top:3px; }
+.p-sub { font-size:11px; color:var(--acc-text); margin-top:3px; }
 .pts { font-size:11px; color:var(--muted); margin-top:8px; display:flex; justify-content:space-between; }
 .pts span { color:var(--text); }
 .p-bar-wrap { height:2px; background:var(--border); margin-top:6px; border-radius:1px; overflow:hidden; }
@@ -27,27 +27,27 @@ canvas { display:block; position:absolute; top:0; left:0; }
 /* meta edit */
 .meta-section { padding:12px 16px; border-bottom:1px solid var(--border); display:flex; flex-direction:column; gap:7px; }
 .sec-lbl { font-size:9px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin-bottom:2px; font-weight:600; }
-.meta-section input { background:#0d0f17; border:1px solid var(--border); border-radius:4px; padding:6px 9px; color:var(--text); font-size:12px; font-family:inherit; width:100%; outline:none; }
-.meta-section input:focus { border-color:#3a3e55; }
+.meta-section input { background:var(--bg3); border:1px solid var(--border); border-radius:4px; padding:6px 9px; color:var(--text); font-size:12px; font-family:inherit; width:100%; outline:none; }
+.meta-section input:focus { border-color:#c7cdae; }
 
 /* detail */
 .detail { padding:14px 16px; border-bottom:1px solid var(--border); min-height:150px; flex-shrink:0; }
-.d-name { font-size:14px; font-weight:600; color:#e4e6f0; margin-bottom:4px; }
+.d-name { font-size:14px; font-weight:600; color:#16231a; margin-bottom:4px; }
 .d-badge { font-size:9px; letter-spacing:.12em; text-transform:uppercase; padding:2px 8px; border-radius:3px; display:inline-block; margin-bottom:8px; }
-.d-desc { font-size:12px; color:#8b8fa8; line-height:1.65; }
+.d-desc { font-size:12px; color:var(--muted); line-height:1.65; }
 .d-req { font-size:11px; color:var(--muted); margin-top:6px; }
-.d-shadow { margin-top:10px; padding:8px 10px; border-left:2px solid #5a2020; background:#110909; border-radius:0 4px 4px 0; }
-.d-shadow-lbl { font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:#6b3030; margin-bottom:2px; }
-.d-shadow-txt { font-size:11px; color:#7a4444; line-height:1.5; }
+.d-shadow { margin-top:10px; padding:8px 10px; border-left:2px solid #EF476F; background:#FDEEF2; border-radius:0 4px 4px 0; }
+.d-shadow-lbl { font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:#9c2c50; margin-bottom:2px; }
+.d-shadow-txt { font-size:11px; color:#7a2038; line-height:1.5; }
 .d-empty { font-size:12px; color:var(--muted); }
-.d-evidence-note { font-size:10.5px; color:#4a7a63; margin-top:8px; line-height:1.5; }
+.d-evidence-note { font-size:10.5px; color:var(--acc-text); margin-top:8px; line-height:1.5; }
 
 /* toggle btn */
 .toggle-btn { margin:10px 16px; padding:9px 14px; border-radius:5px; border:1px solid var(--border); background:transparent; color:var(--muted); font-size:11px; letter-spacing:.06em; cursor:pointer; width:calc(100% - 32px); transition:all .15s; display:none; }
 .toggle-btn.visible { display:block; }
 .toggle-btn:hover { background:var(--bg3); }
 .toggle-btn.can { border-color:var(--c); color:var(--c); }
-.toggle-btn.on { border-color:#3a3e55; color:#5a5e78; }
+.toggle-btn.on { border-color:#c7cdae; color:var(--muted); }
 
 /* stats */
 .stats { padding:12px 16px; border-bottom:1px solid var(--border); }
@@ -61,9 +61,9 @@ canvas { display:block; position:absolute; top:0; left:0; }
 /* export */
 .export-section { padding:12px 16px; display:flex; flex-direction:column; gap:8px; }
 .exp-btn { padding:9px 14px; border-radius:5px; border:1px solid; font-size:11px; letter-spacing:.06em; cursor:pointer; text-align:center; transition:all .15s; }
-.exp-primary { border-color:var(--acc); color:var(--acc); background:transparent; }
-.exp-primary:hover { background:#0d1f18; }
-.exp-copy { border-color:#2a2d42; color:var(--muted); background:transparent; }
+.exp-primary { border-color:var(--acc); color:var(--acc-text); background:transparent; }
+.exp-primary:hover { background:#eafaf3; }
+.exp-copy { border-color:var(--border); color:var(--muted); background:transparent; }
 .exp-copy:hover { background:var(--bg3); }
 .exp-note { font-size:10px; color:var(--muted); line-height:1.5; }
 
@@ -128,7 +128,7 @@ function resize() {
   redraw();
 }
 window.addEventListener('resize', resize);
-function redraw() { drawTree(canvas, ctx, W, H, unlocked, selected, hovered, true); }
+function redraw() { drawTree(canvas, ctx, W, H, unlocked, selected, hovered, true, 'light'); }
 
 function canUnlock(n) { return !unlocked.has(n.id) && n.requires.every(r=>unlocked.has(r)); }
 
