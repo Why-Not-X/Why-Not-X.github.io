@@ -75,7 +75,14 @@
   </div>
 
   <div id="tree-app">
-    <div id="canvas-wrap"><canvas id="c"></canvas></div>
+    <div id="canvas-wrap">
+      <canvas id="c"></canvas>
+      <div class="zoom-controls">
+        <button id="zoom-in" title="Zoom in" aria-label="Zoom in">+</button>
+        <button id="zoom-out" title="Zoom out" aria-label="Zoom out">&minus;</button>
+        <button id="zoom-reset" title="Reset view" aria-label="Reset view">⟲</button>
+      </div>
+    </div>
     <div id="panel">
       <div class="p-header">
         <h1>Skill Tree</h1>

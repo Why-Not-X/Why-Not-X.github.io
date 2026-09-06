@@ -1,0 +1,379 @@
+SKILL TREE — FULL NODE LIST
+============================================================
+Generated from js/tree.js. 63 total skills, 21 currently unlocked (*).
+Edit freely — this file is not read by the site.
+
+CORE (1)
+------------------------------------------------------------
+[*] Self  (id: core)
+      Attribute class : Core
+      Tier            : 0
+      Skill path      : Self
+
+
+PERCEPTION (7)
+------------------------------------------------------------
+[*] Perception  (id: perception)
+      Attribute class : Perception
+      Tier            : 1
+      Skill path      : Self -> Perception
+
+[*] Pattern recognition  (id: pattern)
+      Attribute class : Perception
+      Tier            : 2
+      Skill path      : Self -> Perception -> Pattern recognition
+
+[*] Deep focus  (id: deep_focus)
+      Attribute class : Perception
+      Tier            : 2
+      Skill path      : Self -> Perception -> Deep focus
+
+[ ] Social reading  (id: social_read)
+      Attribute class : Perception
+      Tier            : 2
+      Skill path      : Self -> Perception -> Social reading
+
+[ ] Aesthetic sense  (id: aesthetic)
+      Attribute class : Perception
+      Tier            : 3
+      Skill path      : Self -> Perception -> Pattern recognition -> Aesthetic sense
+      Also requires   : Deep focus
+
+[ ] Empathy  (id: empathy)
+      Attribute class : Perception
+      Tier            : 3
+      Skill path      : Self -> Perception -> Social reading -> Empathy
+
+[ ] Intuition  (id: intuition)
+      Attribute class : Perception
+      Tier            : 4
+      Skill path      : Self -> Perception -> Pattern recognition -> Aesthetic sense -> Intuition
+      Also requires   : Empathy
+
+
+CONTEMPLATION (9)
+------------------------------------------------------------
+[*] Contemplation  (id: contemplation)
+      Attribute class : Contemplation
+      Tier            : 1
+      Skill path      : Self -> Contemplation
+
+[*] Stillness  (id: stillness)
+      Attribute class : Contemplation
+      Tier            : 2
+      Skill path      : Self -> Contemplation -> Stillness
+
+[*] Deep inquiry  (id: inquiry)
+      Attribute class : Contemplation
+      Tier            : 2
+      Skill path      : Self -> Contemplation -> Deep inquiry
+
+[ ] Sitting with ambiguity  (id: ambiguity)
+      Attribute class : Contemplation
+      Tier            : 2
+      Skill path      : Self -> Contemplation -> Sitting with ambiguity
+
+[ ] First principles  (id: first_principles)
+      Attribute class : Contemplation
+      Tier            : 3
+      Skill path      : Self -> Contemplation -> Stillness -> First principles
+      Also requires   : Deep inquiry
+
+[ ] Steelmanning  (id: steelmanning)
+      Attribute class : Contemplation
+      Tier            : 3
+      Skill path      : Self -> Contemplation -> Deep inquiry -> Steelmanning
+      Also requires   : Sitting with ambiguity
+
+[ ] Dialectical thinking  (id: dialectical)
+      Attribute class : Contemplation
+      Tier            : 4
+      Skill path      : Self -> Contemplation -> Stillness -> First principles -> Dialectical thinking
+      Also requires   : Steelmanning
+
+[ ] Epistemic humility  (id: epistemic)
+      Attribute class : Contemplation
+      Tier            : 4
+      Skill path      : Self -> Contemplation -> Deep inquiry -> Steelmanning -> Epistemic humility
+      Also requires   : Sitting with ambiguity
+
+[ ] Original thought  (id: original_thought)
+      Attribute class : Contemplation
+      Tier            : 5
+      Skill path      : Self -> Contemplation -> Stillness -> First principles -> Dialectical thinking -> Original thought
+      Also requires   : Epistemic humility
+
+
+SYSTEMS (7)
+------------------------------------------------------------
+[*] Systems thinking  (id: systems)
+      Attribute class : Systems
+      Tier            : 1
+      Skill path      : Self -> Systems thinking
+
+[*] Root cause analysis  (id: rootcause)
+      Attribute class : Systems
+      Tier            : 2
+      Skill path      : Self -> Systems thinking -> Root cause analysis
+
+[*] Abstraction  (id: abstraction)
+      Attribute class : Systems
+      Tier            : 2
+      Skill path      : Self -> Systems thinking -> Abstraction
+
+[ ] Consequence mapping  (id: prediction)
+      Attribute class : Systems
+      Tier            : 2
+      Skill path      : Self -> Systems thinking -> Consequence mapping
+
+[ ] Mental models  (id: mental_models)
+      Attribute class : Systems
+      Tier            : 3
+      Skill path      : Self -> Systems thinking -> Root cause analysis -> Mental models
+      Also requires   : Abstraction
+
+[ ] Debugging mindset  (id: debugging_sys)
+      Attribute class : Systems
+      Tier            : 3
+      Skill path      : Self -> Systems thinking -> Root cause analysis -> Debugging mindset
+      Also requires   : Consequence mapping
+
+[ ] Architecture  (id: architecture_think)
+      Attribute class : Systems
+      Tier            : 4
+      Skill path      : Self -> Systems thinking -> Root cause analysis -> Mental models -> Architecture
+      Also requires   : Debugging mindset
+
+
+CREATION (7)
+------------------------------------------------------------
+[*] Creation  (id: creation)
+      Attribute class : Creation
+      Tier            : 1
+      Skill path      : Self -> Creation
+
+[*] Ideation  (id: ideation)
+      Attribute class : Creation
+      Tier            : 2
+      Skill path      : Self -> Creation -> Ideation
+
+[*] Taste  (id: taste)
+      Attribute class : Creation
+      Tier            : 2
+      Skill path      : Self -> Creation -> Taste
+
+[ ] Iteration speed  (id: iteration)
+      Attribute class : Creation
+      Tier            : 2
+      Skill path      : Self -> Creation -> Iteration speed
+
+[ ] Synthesis  (id: synthesis_c)
+      Attribute class : Creation
+      Tier            : 3
+      Skill path      : Self -> Creation -> Ideation -> Synthesis
+      Also requires   : Taste
+
+[ ] Rapid prototyping  (id: prototyping)
+      Attribute class : Creation
+      Tier            : 3
+      Skill path      : Self -> Creation -> Ideation -> Rapid prototyping
+      Also requires   : Iteration speed
+
+[ ] Ship discipline  (id: ship)
+      Attribute class : Creation
+      Tier            : 4
+      Skill path      : Self -> Creation -> Ideation -> Synthesis -> Ship discipline
+      Also requires   : Rapid prototyping
+
+
+EXPRESSION (7)
+------------------------------------------------------------
+[*] Expression  (id: expression)
+      Attribute class : Expression
+      Tier            : 1
+      Skill path      : Self -> Expression
+
+[*] Writing clarity  (id: writing)
+      Attribute class : Expression
+      Tier            : 2
+      Skill path      : Self -> Expression -> Writing clarity
+
+[*] Presence  (id: presence)
+      Attribute class : Expression
+      Tier            : 2
+      Skill path      : Self -> Expression -> Presence
+
+[ ] Persuasion  (id: persuasion)
+      Attribute class : Expression
+      Tier            : 2
+      Skill path      : Self -> Expression -> Persuasion
+
+[ ] Teaching  (id: teaching)
+      Attribute class : Expression
+      Tier            : 3
+      Skill path      : Self -> Expression -> Writing clarity -> Teaching
+      Also requires   : Presence
+
+[ ] Storytelling  (id: storytelling)
+      Attribute class : Expression
+      Tier            : 3
+      Skill path      : Self -> Expression -> Persuasion -> Storytelling
+      Also requires   : Writing clarity
+
+[ ] Public speaking  (id: public_speaking)
+      Attribute class : Expression
+      Tier            : 4
+      Skill path      : Self -> Expression -> Writing clarity -> Teaching -> Public speaking
+      Also requires   : Storytelling
+
+
+DRIVE (7)
+------------------------------------------------------------
+[*] Drive  (id: drive)
+      Attribute class : Drive
+      Tier            : 1
+      Skill path      : Self -> Drive
+
+[*] Resilience  (id: resilience)
+      Attribute class : Drive
+      Tier            : 2
+      Skill path      : Self -> Drive -> Resilience
+
+[*] Vision  (id: vision)
+      Attribute class : Drive
+      Tier            : 2
+      Skill path      : Self -> Drive -> Vision
+
+[ ] Consistency  (id: consistency)
+      Attribute class : Drive
+      Tier            : 2
+      Skill path      : Self -> Drive -> Consistency
+
+[ ] Risk tolerance  (id: risk_tolerance)
+      Attribute class : Drive
+      Tier            : 3
+      Skill path      : Self -> Drive -> Resilience -> Risk tolerance
+      Also requires   : Vision
+
+[ ] Prioritization  (id: prioritization)
+      Attribute class : Drive
+      Tier            : 3
+      Skill path      : Self -> Drive -> Vision -> Prioritization
+      Also requires   : Consistency
+
+[ ] Momentum  (id: momentum)
+      Attribute class : Drive
+      Tier            : 4
+      Skill path      : Self -> Drive -> Resilience -> Risk tolerance -> Momentum
+      Also requires   : Prioritization
+
+
+CRAFT (6)
+------------------------------------------------------------
+[ ] Creative craft  (id: hard_craft)
+      Attribute class : Craft
+      Tier            : 1
+      Skill path      : Self -> Creative craft
+
+[*] Design thinking  (id: design_thinking)
+      Attribute class : Craft
+      Tier            : 2
+      Skill path      : Self -> Creative craft -> Design thinking
+
+[ ] Visual design  (id: visual_design)
+      Attribute class : Craft
+      Tier            : 2
+      Skill path      : Self -> Creative craft -> Visual design
+
+[ ] UX thinking  (id: ux)
+      Attribute class : Craft
+      Tier            : 3
+      Skill path      : Self -> Creative craft -> Design thinking -> UX thinking
+      Also requires   : Visual design
+
+[ ] Technical writing  (id: technical_writing)
+      Attribute class : Craft
+      Tier            : 3
+      Skill path      : Self -> Creative craft -> Design thinking -> Technical writing
+
+[ ] Product sense  (id: product_sense)
+      Attribute class : Craft
+      Tier            : 4
+      Skill path      : Self -> Creative craft -> Design thinking -> UX thinking -> Product sense
+      Also requires   : Technical writing
+
+
+TECHNOLOGY (6)
+------------------------------------------------------------
+[ ] Technology  (id: hard_tech)
+      Attribute class : Technology
+      Tier            : 1
+      Skill path      : Self -> Technology
+
+[*] Programming  (id: code)
+      Attribute class : Technology
+      Tier            : 2
+      Skill path      : Self -> Technology -> Programming
+
+[ ] Data literacy  (id: data)
+      Attribute class : Technology
+      Tier            : 2
+      Skill path      : Self -> Technology -> Data literacy
+
+[ ] Systems design  (id: systems_design)
+      Attribute class : Technology
+      Tier            : 3
+      Skill path      : Self -> Technology -> Programming -> Systems design
+      Also requires   : Data literacy
+
+[ ] Debugging  (id: debugging_hard)
+      Attribute class : Technology
+      Tier            : 3
+      Skill path      : Self -> Technology -> Programming -> Debugging
+
+[ ] Build and deploy  (id: devops)
+      Attribute class : Technology
+      Tier            : 4
+      Skill path      : Self -> Technology -> Programming -> Systems design -> Build and deploy
+      Also requires   : Debugging
+
+
+FUSION (6)
+------------------------------------------------------------
+[ ] Philosopher  (id: philosopher)
+      Attribute class : Fusion
+      Tier            : 6
+      Skill path      : Self -> Contemplation -> Stillness -> First principles -> Dialectical thinking -> Original thought -> Philosopher
+      Also requires   : Public speaking
+
+[ ] Diagnostician  (id: diagnostician)
+      Attribute class : Fusion
+      Tier            : 6
+      Skill path      : Self -> Perception -> Pattern recognition -> Aesthetic sense -> Intuition -> Diagnostician
+      Also requires   : Architecture
+
+[ ] Builder  (id: builder)
+      Attribute class : Fusion
+      Tier            : 6
+      Skill path      : Self -> Creation -> Ideation -> Synthesis -> Ship discipline -> Builder
+      Also requires   : Build and deploy, Product sense
+
+[ ] Narrator  (id: narrator)
+      Attribute class : Fusion
+      Tier            : 6
+      Skill path      : Self -> Expression -> Persuasion -> Storytelling -> Narrator
+      Also requires   : Synthesis
+
+[ ] Prolific  (id: prolific)
+      Attribute class : Fusion
+      Tier            : 6
+      Skill path      : Self -> Drive -> Resilience -> Risk tolerance -> Momentum -> Prolific
+      Also requires   : Ship discipline
+
+[ ] Explainer  (id: explainer)
+      Attribute class : Fusion
+      Tier            : 6
+      Skill path      : Self -> Systems thinking -> Root cause analysis -> Mental models -> Architecture -> Explainer
+      Also requires   : Teaching, Original thought
+
+

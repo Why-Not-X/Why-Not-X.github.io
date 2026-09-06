@@ -7,18 +7,30 @@ const canvas = document.getElementById('c');
 const ctx    = canvas.getContext('2d');
 let W, H;
 
+// ── Pan / zoom camera ──────────────────────────────────────────────────────
+const camera = { x: 0, y: 0, scale: 1 };
+const MIN_SCALE = 0.5, MAX_SCALE = 3;
+
 function resize() {
   const wrap = document.getElementById('canvas-wrap');
   W = wrap.clientWidth; H = wrap.clientHeight;
   const dpr = window.devicePixelRatio || 1;
   canvas.width  = W * dpr; canvas.height = H * dpr;
   canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
-  ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.scale(dpr, dpr);
+  camera.x = 0; camera.y = 0; camera.scale = 1;
   redraw();
 }
 window.addEventListener('resize', resize);
 
-function redraw() { drawTree(canvas, ctx, W, H, unlocked, openNodeId, hovered, false, 'light'); }
+function redraw() {
+  const dpr = window.devicePixelRatio || 1;
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.scale(dpr, dpr);
+  ctx.translate(camera.x, camera.y);
+  ctx.scale(camera.scale, camera.scale);
+  drawTree(canvas, ctx, W, H, unlocked, openNodeId, hovered, false, 'light');
+}
 
 function nodeAt(mx, my) {
   const CX = W / 2, CY = H / 2;
@@ -32,19 +44,89 @@ function nodeAt(mx, my) {
   return null;
 }
 
-function mp(e) { const r = canvas.getBoundingClientRect(); return { mx: e.clientX - r.left, my: e.clientY - r.top }; }
+// Screen (CSS-pixel) coordinates -> logical drawing coordinates, accounting for pan/zoom.
+function mp(e) {
+  const r = canvas.getBoundingClientRect();
+  const sx = e.clientX - r.left, sy = e.clientY - r.top;
+  return { mx: (sx - camera.x) / camera.scale, my: (sy - camera.y) / camera.scale };
+}
+
+function zoomAt(sx, sy, factor) {
+  const newScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, camera.scale * factor));
+  const lx = (sx - camera.x) / camera.scale;
+  const ly = (sy - camera.y) / camera.scale;
+  camera.scale = newScale;
+  camera.x = sx - lx * camera.scale;
+  camera.y = sy - ly * camera.scale;
+  redraw();
+}
+
+canvas.addEventListener('wheel', e => {
+  e.preventDefault();
+  const r = canvas.getBoundingClientRect();
+  zoomAt(e.clientX - r.left, e.clientY - r.top, Math.exp(-e.deltaY * 0.001));
+}, { passive: false });
+
+document.getElementById('zoom-in').addEventListener('click', () => zoomAt(W / 2, H / 2, 1.25));
+document.getElementById('zoom-out').addEventListener('click', () => zoomAt(W / 2, H / 2, 0.8));
+document.getElementById('zoom-reset').addEventListener('click', () => {
+  camera.x = 0; camera.y = 0; camera.scale = 1; redraw();
+});
+
+// Click-and-drag panning (mouse). A "click" only opens a node's modal if the
+// pointer didn't move past a small threshold — otherwise it was a pan.
+let isPanning = false, dragged = false, panStart = null;
+
+canvas.addEventListener('mousedown', e => {
+  isPanning = true; dragged = false;
+  panStart = { x: e.clientX, y: e.clientY, camX: camera.x, camY: camera.y };
+  canvas.classList.add('panning');
+});
+window.addEventListener('mousemove', e => {
+  if (!isPanning) return;
+  const dx = e.clientX - panStart.x, dy = e.clientY - panStart.y;
+  if (Math.abs(dx) > 3 || Math.abs(dy) > 3) dragged = true;
+  if (dragged) {
+    camera.x = panStart.camX + dx;
+    camera.y = panStart.camY + dy;
+    redraw();
+  }
+});
+window.addEventListener('mouseup', () => { isPanning = false; canvas.classList.remove('panning'); });
+
+// Single-touch panning (mobile).
+canvas.addEventListener('touchstart', e => {
+  if (e.touches.length !== 1) return;
+  const t = e.touches[0];
+  isPanning = true; dragged = false;
+  panStart = { x: t.clientX, y: t.clientY, camX: camera.x, camY: camera.y };
+}, { passive: true });
+canvas.addEventListener('touchmove', e => {
+  if (!isPanning || e.touches.length !== 1) return;
+  const t = e.touches[0];
+  const dx = t.clientX - panStart.x, dy = t.clientY - panStart.y;
+  if (Math.abs(dx) > 3 || Math.abs(dy) > 3) dragged = true;
+  if (dragged) {
+    e.preventDefault();
+    camera.x = panStart.camX + dx;
+    camera.y = panStart.camY + dy;
+    redraw();
+  }
+}, { passive: false });
+canvas.addEventListener('touchend', () => { isPanning = false; });
 
 canvas.addEventListener('mousemove', e => {
   const { mx, my } = mp(e);
   const n = nodeAt(mx, my);
   const nid = n ? n.id : null;
   if (nid !== hovered) {
-    hovered = nid; canvas.style.cursor = n ? 'pointer' : 'default';
+    hovered = nid; canvas.style.cursor = n ? 'pointer' : (isPanning ? 'grabbing' : 'grab');
     redraw();
   }
 });
 canvas.addEventListener('mouseleave', () => { hovered = null; redraw(); });
 canvas.addEventListener('click', e => {
+  if (dragged) { dragged = false; return; }
   const { mx, my } = mp(e);
   const n = nodeAt(mx, my);
   if (n) openModal(n);
