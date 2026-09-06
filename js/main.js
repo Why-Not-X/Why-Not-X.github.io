@@ -160,19 +160,19 @@ loadState();
 const TIMELINE = [
   { dates: 'Aug 2024 – Present', org: 'CU Boulder — Leeds School of Business', role: 'B.S. Business Administration, Business Analytics emphasis',
     bullets: [
-      'Business + Computer Science integration program',
-      'Cumulative GPA 3.7 · Leeds Honors Program · Dean\'s List, Fall 2024 & Spring 2025',
-      'Coursework: Statistical Analysis in Business, Computer Science 2, Accounting I, AP Quantitative Reasoning',
+      'Computer science integration program · Certificates in Personal Financial Planning, AI & Automation, and Global Entrepreneurship',
+      'Cumulative GPA 3.57 · Leeds Honors Program · Dean\'s List, Fall 2024 & Spring 2025',
+      'Coursework: Business Analytics, Buyer Behavior, Business Data Management, Personal Investment Management, AP Quantitative Reasoning, Computer Systems, Accounting II',
     ]},
-  { dates: 'Dec 2025 – Present', org: 'LAIS — Leeds Association for Information Science', role: 'VP of Outreach',
-    bullets: ['Coordinates with event speakers', 'Maintains relationships with club sponsors'] },
-  { dates: 'Jul 2025 – Present', org: 'Avis', role: 'Vehicle Service Agent',
+  { dates: 'Dec 2025 – Aug 2026', org: 'LAIS — Leeds Association for Information Science', role: 'VP of Outreach',
+    bullets: ['Coordinated onboarding for new guest speakers', 'Organized event logistics, getting things and people to their correct places', 'Assisted with enhancing organization exposure efforts, doubling attendee turnout'] },
+  { dates: 'Jul 2025 – Feb 2026', org: 'Avis', role: 'Vehicle Service Agent',
     bullets: ['Managed efficiency and operational optimization in a high-pace environment', 'Refined service processes for consistency under repetition'] },
   { dates: 'May 2025 – Present', org: 'Zen Property Management', role: 'Assistant Property Manager',
-    bullets: ['Investigates tenant requests and coordinates contractor calls', 'Conducts site visits and property walkthroughs', 'Analyzes client finances'] },
+    bullets: ['Helps analyze client financials and provides customer service to prospective tenants', 'Facilitates on-site communications', 'Assisted with network exposure for listings and photography for posts'] },
   { dates: 'Jul 2023 – Jul 2024', org: 'Target', role: 'General Merchandise / Fulfillment / Closing / Food & Beverage Expert',
     bullets: ['Managed customer orders across departments', 'Executed closing routines consistently', 'Kept inventory organized and up to date'] },
-  { dates: 'Sep 2021 – May 2024', org: 'George Washington HS Robotics', role: 'Build · Business · Administrative Teams, Retention Lead',
+  { dates: 'Sep 2022 – May 2024', org: 'George Washington HS Robotics', role: 'Build · Business · Administrative Teams, Retention Lead',
     bullets: ['Build Team: machined individual mechanisms (milling, lathing, CNC)', 'Business Team: contributed to marketing and fundraising', 'Administrative Team: coordinated STEM outreach events', '1st place Regionals, qualified for Worlds (2024) · Impact Award (2024)'] },
 ];
 
